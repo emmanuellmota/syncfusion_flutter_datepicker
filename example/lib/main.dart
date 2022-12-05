@@ -82,6 +82,9 @@ class MyAppState extends State<MyApp> {
                   bottom: 0,
                   child: SfDateRangePicker(
                     onSelectionChanged: _onSelectionChanged,
+                    onLongPress: (date) {
+                      print('Long pressed date: $date');
+                    },
                     selectionMode: DateRangePickerSelectionMode.multiRange,
                     initialSelectedRange: PickerDateRange(
                       DateTime.now().subtract(const Duration(days: 4)),
@@ -101,7 +104,7 @@ class MyAppState extends State<MyApp> {
                       dayFormatBuilder: (int weekday) => weekday.toString(),
                       weekendDaysColor: Colors.black,
                       specialDates: [
-                        DateTime.now().subtract(const Duration(days: 6)),
+                        DateTime.now().add(const Duration(days: 6)),
                       ],
                     ),
                   ),

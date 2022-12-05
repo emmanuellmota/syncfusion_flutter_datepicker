@@ -62,6 +62,8 @@ typedef HijriDatePickerViewChangedCallback = void Function(HijriDatePickerViewCh
 /// callback.
 typedef DateRangePickerSelectionChangedCallback = void Function(DateRangePickerSelectionChangedArgs dateRangePickerSelectionChangedArgs);
 
+typedef LongPressCallback = void Function(DateTime date);
+
 // method that raise the picker selection changed call back with the given
 // parameters.
 void _raiseSelectionChangedCallback(_SfDateRangePicker picker, {dynamic value}) {
@@ -190,54 +192,55 @@ class SfDateRangePicker extends StatelessWidget {
   ///
   /// When the visible view changes, the widget will call the [onViewChanged]
   /// callback with the current view and the current view visible dates.
-  SfDateRangePicker(
-      {Key? key,
-      DateRangePickerView view = DateRangePickerView.month,
-      this.selectionMode = DateRangePickerSelectionMode.single,
-      this.headerHeight = 40,
-      this.todayHighlightColor,
-      this.backgroundColor,
-      DateTime? initialSelectedDate,
-      List<DateTime>? initialSelectedDates,
-      PickerDateRange? initialSelectedRange,
-      List<PickerDateRange>? initialSelectedRanges,
-      this.toggleDaySelection = false,
-      this.enablePastDates = true,
-      this.showNavigationArrow = false,
-      this.confirmText = 'OK',
-      this.cancelText = 'CANCEL',
-      this.showActionButtons = false,
-      this.selectionShape = DateRangePickerSelectionShape.circle,
-      this.navigationDirection = DateRangePickerNavigationDirection.horizontal,
-      this.allowViewNavigation = true,
-      this.navigationMode = DateRangePickerNavigationMode.snap,
-      this.enableMultiView = false,
-      this.controller,
-      this.onViewChanged,
-      this.onSelectionChanged,
-      this.onCancel,
-      this.onSubmit,
-      this.headerStyle = const DateRangePickerHeaderStyle(),
-      this.yearCellStyle = const DateRangePickerYearCellStyle(),
-      this.monthViewSettings = const DateRangePickerMonthViewSettings(),
-      this.monthCellStyle = const DateRangePickerMonthCellStyle(),
-      DateTime? minDate,
-      DateTime? maxDate,
-      DateTime? initialDisplayDate,
-      double viewSpacing = 20,
-      this.selectionRadius = -1,
-      this.selectionColor,
-      this.startRangeSelectionColor,
-      this.endRangeSelectionColor,
-      this.rangeSelectionColor,
-      this.selectionTextStyle,
-      this.rangeTextStyle,
-      this.monthFormat,
-      this.cellBuilder,
-      this.showTodayButton = false,
-      this.selectableDayPredicate,
-      this.extendableRangeSelectionDirection = ExtendableRangeSelectionDirection.both})
-      : assert(headerHeight >= -1),
+  SfDateRangePicker({
+    Key? key,
+    DateRangePickerView view = DateRangePickerView.month,
+    this.selectionMode = DateRangePickerSelectionMode.single,
+    this.headerHeight = 40,
+    this.todayHighlightColor,
+    this.backgroundColor,
+    DateTime? initialSelectedDate,
+    List<DateTime>? initialSelectedDates,
+    PickerDateRange? initialSelectedRange,
+    List<PickerDateRange>? initialSelectedRanges,
+    this.toggleDaySelection = false,
+    this.enablePastDates = true,
+    this.showNavigationArrow = false,
+    this.confirmText = 'OK',
+    this.cancelText = 'CANCEL',
+    this.showActionButtons = false,
+    this.selectionShape = DateRangePickerSelectionShape.circle,
+    this.navigationDirection = DateRangePickerNavigationDirection.horizontal,
+    this.allowViewNavigation = true,
+    this.navigationMode = DateRangePickerNavigationMode.snap,
+    this.enableMultiView = false,
+    this.controller,
+    this.onViewChanged,
+    this.onSelectionChanged,
+    this.onCancel,
+    this.onSubmit,
+    this.headerStyle = const DateRangePickerHeaderStyle(),
+    this.yearCellStyle = const DateRangePickerYearCellStyle(),
+    this.monthViewSettings = const DateRangePickerMonthViewSettings(),
+    this.monthCellStyle = const DateRangePickerMonthCellStyle(),
+    DateTime? minDate,
+    DateTime? maxDate,
+    DateTime? initialDisplayDate,
+    double viewSpacing = 20,
+    this.selectionRadius = -1,
+    this.selectionColor,
+    this.startRangeSelectionColor,
+    this.endRangeSelectionColor,
+    this.rangeSelectionColor,
+    this.selectionTextStyle,
+    this.rangeTextStyle,
+    this.monthFormat,
+    this.cellBuilder,
+    this.showTodayButton = false,
+    this.selectableDayPredicate,
+    this.extendableRangeSelectionDirection = ExtendableRangeSelectionDirection.both,
+    this.onLongPress,
+  })  : assert(headerHeight >= -1),
         assert(minDate == null || maxDate == null || minDate.isBefore(maxDate)),
         assert(minDate == null || maxDate == null || maxDate.isAfter(minDate)),
         assert(viewSpacing >= 0),
@@ -2581,6 +2584,8 @@ class SfDateRangePicker extends StatelessWidget {
   /// ```
   final Function(Object?)? onSubmit;
 
+  final LongPressCallback? onLongPress;
+
   @override
   Widget build(BuildContext context) {
     return _SfDateRangePicker(
@@ -2630,6 +2635,7 @@ class SfDateRangePicker extends StatelessWidget {
       showTodayButton: showTodayButton,
       selectableDayPredicate: selectableDayPredicate,
       extendableRangeSelectionDirection: extendableRangeSelectionDirection,
+      onLongPress: onLongPress,
     );
   }
 
@@ -2841,6 +2847,7 @@ class SfHijriDateRangePicker extends StatelessWidget {
     this.showTodayButton = false,
     this.selectableDayPredicate,
     this.extendableRangeSelectionDirection = ExtendableRangeSelectionDirection.both,
+    this.onLongPress,
   })  : initialSelectedDate = controller != null && controller.selectedDate != null ? controller.selectedDate : initialSelectedDate,
         initialSelectedDates = controller != null && controller.selectedDates != null ? controller.selectedDates : initialSelectedDates,
         initialSelectedRange = controller != null && controller.selectedRange != null ? controller.selectedRange : initialSelectedRange,
@@ -5175,6 +5182,8 @@ class SfHijriDateRangePicker extends StatelessWidget {
   /// ```
   final Function(Object?)? onSubmit;
 
+  final LongPressCallback? onLongPress;
+
   @override
   Widget build(BuildContext context) {
     return _SfDateRangePicker(
@@ -5225,6 +5234,7 @@ class SfHijriDateRangePicker extends StatelessWidget {
       showTodayButton: showTodayButton,
       selectableDayPredicate: selectableDayPredicate,
       extendableRangeSelectionDirection: extendableRangeSelectionDirection,
+      onLongPress: onLongPress,
     );
   }
 
@@ -5286,55 +5296,56 @@ class SfHijriDateRangePicker extends StatelessWidget {
 
 @immutable
 class _SfDateRangePicker extends StatefulWidget {
-  const _SfDateRangePicker(
-      {Key? key,
-      required this.view,
-      required this.selectionMode,
-      this.isHijri = false,
-      required this.headerHeight,
-      this.todayHighlightColor,
-      this.backgroundColor,
-      this.initialSelectedDate,
-      this.initialSelectedDates,
-      this.initialSelectedRange,
-      this.initialSelectedRanges,
-      this.toggleDaySelection = false,
-      this.enablePastDates = true,
-      this.showNavigationArrow = false,
-      required this.selectionShape,
-      required this.navigationDirection,
-      this.controller,
-      this.onViewChanged,
-      this.onSelectionChanged,
-      this.onCancel,
-      this.onSubmit,
-      required this.headerStyle,
-      required this.yearCellStyle,
-      required this.monthViewSettings,
-      required this.initialDisplayDate,
-      this.confirmText = 'OK',
-      this.cancelText = 'CANCEL',
-      this.showActionButtons = false,
-      required this.minDate,
-      required this.maxDate,
-      required this.monthCellStyle,
-      this.allowViewNavigation = true,
-      this.enableMultiView = false,
-      required this.navigationMode,
-      required this.viewSpacing,
-      required this.selectionRadius,
-      this.selectionColor,
-      this.startRangeSelectionColor,
-      this.endRangeSelectionColor,
-      this.rangeSelectionColor,
-      this.selectionTextStyle,
-      this.rangeTextStyle,
-      this.monthFormat,
-      this.cellBuilder,
-      this.showTodayButton = false,
-      this.selectableDayPredicate,
-      this.extendableRangeSelectionDirection = ExtendableRangeSelectionDirection.both})
-      : super(key: key);
+  const _SfDateRangePicker({
+    Key? key,
+    required this.view,
+    required this.selectionMode,
+    this.isHijri = false,
+    required this.headerHeight,
+    this.todayHighlightColor,
+    this.backgroundColor,
+    this.initialSelectedDate,
+    this.initialSelectedDates,
+    this.initialSelectedRange,
+    this.initialSelectedRanges,
+    this.toggleDaySelection = false,
+    this.enablePastDates = true,
+    this.showNavigationArrow = false,
+    required this.selectionShape,
+    required this.navigationDirection,
+    this.controller,
+    this.onViewChanged,
+    this.onSelectionChanged,
+    this.onCancel,
+    this.onSubmit,
+    required this.headerStyle,
+    required this.yearCellStyle,
+    required this.monthViewSettings,
+    required this.initialDisplayDate,
+    this.confirmText = 'OK',
+    this.cancelText = 'CANCEL',
+    this.showActionButtons = false,
+    required this.minDate,
+    required this.maxDate,
+    required this.monthCellStyle,
+    this.allowViewNavigation = true,
+    this.enableMultiView = false,
+    required this.navigationMode,
+    required this.viewSpacing,
+    required this.selectionRadius,
+    this.selectionColor,
+    this.startRangeSelectionColor,
+    this.endRangeSelectionColor,
+    this.rangeSelectionColor,
+    this.selectionTextStyle,
+    this.rangeTextStyle,
+    this.monthFormat,
+    this.cellBuilder,
+    this.showTodayButton = false,
+    this.selectableDayPredicate,
+    this.extendableRangeSelectionDirection = ExtendableRangeSelectionDirection.both,
+    this.onLongPress,
+  }) : super(key: key);
 
   final DateRangePickerView view;
 
@@ -5427,6 +5438,8 @@ class _SfDateRangePicker extends StatefulWidget {
   final dynamic selectableDayPredicate;
 
   final ExtendableRangeSelectionDirection extendableRangeSelectionDirection;
+
+  final LongPressCallback? onLongPress;
 
   @override
   _SfDateRangePickerState createState() => _SfDateRangePickerState();
@@ -6455,6 +6468,7 @@ class _SfDateRangePickerState extends State<_SfDateRangePicker> with SingleTicke
           getPickerStateDetails: _getPickerStateValues,
           updatePickerStateDetails: _updatePickerStateValues,
           isRtl: _isRtl,
+          onLongPress: widget.onLongPress,
         ),
       ),
     );
@@ -6553,6 +6567,7 @@ class _SfDateRangePickerState extends State<_SfDateRangePicker> with SingleTicke
               _updatePickerStateValues(details);
             },
             key: _scrollViewKey,
+            onLongPress: widget.onLongPress,
           ),
         ),
       ),
@@ -7987,6 +8002,7 @@ class _PickerScrollView extends StatefulWidget {
     Key? key,
     required this.getPickerStateValues,
     required this.updatePickerStateValues,
+    this.onLongPress,
   }) : super(key: key);
 
   /// Holds the picker instance to access the picker details.
@@ -8018,6 +8034,8 @@ class _PickerScrollView extends StatefulWidget {
 
   /// Defines the text scale factor of [SfDateRangePicker].
   final double textScaleFactor;
+
+  final LongPressCallback? onLongPress;
 
   @override
   _PickerScrollViewState createState() => _PickerScrollViewState();
@@ -8649,6 +8667,7 @@ class _PickerScrollViewState extends State<_PickerScrollView> with TickerProvide
         _updatePickerViewStateDetails(details);
       },
       isRtl: widget.isRtl,
+      onLongPress: widget.onLongPress,
     );
   }
 
@@ -10014,6 +10033,7 @@ class _PickerView extends StatefulWidget {
     required this.getPickerStateDetails,
     required this.updatePickerStateDetails,
     this.isRtl = false,
+    this.onLongPress,
   }) : super(key: key);
 
   /// Holds the visible dates for the picker view.
@@ -10052,6 +10072,8 @@ class _PickerView extends StatefulWidget {
   final double textScaleFactor;
 
   final List<dynamic>? disableDatePredicates;
+
+  final LongPressCallback? onLongPress;
 
   @override
   _PickerViewState createState() => _PickerViewState();
@@ -10113,6 +10135,7 @@ class _PickerViewState extends State<_PickerView> with TickerProviderStateMixin 
                   child: _addMonthView(locale, widget.datePickerTheme, localizations),
                 )),
             onTapUp: _updateTapCallback,
+            onLongPressStart: _updateLongPressCallback,
             onHorizontalDragStart: _getDragStartCallback(),
             onVerticalDragStart: _getDragStartCallback(),
             onHorizontalDragUpdate: _getDragUpdateCallback(),
@@ -10311,6 +10334,17 @@ class _PickerViewState extends State<_PickerView> with TickerProviderStateMixin 
 
     if (widget.focusNode != null && !widget.focusNode!.hasFocus) {
       widget.focusNode!.requestFocus();
+    }
+  }
+
+  void _updateLongPressCallback(LongPressStartDetails details) {
+    final DateRangePickerView pickerView = DateRangePickerHelper.getPickerView(widget.controller.view);
+    if (pickerView == DateRangePickerView.month) {
+      double viewHeaderHeight = widget.picker.monthViewSettings.viewHeaderHeight as double;
+
+      if (details.localPosition.dy > viewHeaderHeight) {
+        _handleLongTouch(Offset(details.localPosition.dx, details.localPosition.dy - viewHeaderHeight), details);
+      }
     }
   }
 
@@ -11171,6 +11205,21 @@ class _PickerViewState extends State<_PickerView> with TickerProviderStateMixin 
       _drawSelection(selectedDate);
       widget.updatePickerStateDetails(_pickerStateDetails);
       _monthView!.selectionNotifier.value = !_monthView!.selectionNotifier.value;
+    }
+  }
+
+  void _handleLongTouch(Offset details, LongPressStartDetails tapUpDetails) {
+    widget.getPickerStateDetails(_pickerStateDetails);
+    final DateRangePickerView pickerView = DateRangePickerHelper.getPickerView(widget.controller.view);
+    if (pickerView == DateRangePickerView.month) {
+      final int index = _getSelectedIndex(details.dx, details.dy);
+      if (index == -1) {
+        return;
+      }
+
+      final dynamic selectedDate = widget.visibleDates[index];
+
+      widget.onLongPress?.call(selectedDate);
     }
   }
 
