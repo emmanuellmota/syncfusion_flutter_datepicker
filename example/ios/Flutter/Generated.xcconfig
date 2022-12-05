@@ -1,7 +1,7 @@
 // This is a generated file; do not edit or check into version control.
 FLUTTER_ROOT=/Users/emmanuellmota/fvm/versions/2.0.6
-FLUTTER_APPLICATION_PATH=/Users/emmanuellmota/Projects/syncfusion_flutter_datepicker-19.4.56/example
-FLUTTER_TARGET=/Users/emmanuellmota/Projects/syncfusion_flutter_datepicker-19.4.56/example/lib/main.dart
+FLUTTER_APPLICATION_PATH=/Users/emmanuellmota/Projects/syncfusion_flutter_datepicker/example
+FLUTTER_TARGET=/Users/emmanuellmota/Projects/syncfusion_flutter_datepicker/example/lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
 FLUTTER_BUILD_NAME=1.0.0
@@ -9,4 +9,4 @@ FLUTTER_BUILD_NUMBER=1
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=/Users/emmanuellmota/Projects/syncfusion_flutter_datepicker-19.4.56/example/.dart_tool/package_config.json
+PACKAGE_CONFIG=/Users/emmanuellmota/Projects/syncfusion_flutter_datepicker/example/.dart_tool/package_config.json

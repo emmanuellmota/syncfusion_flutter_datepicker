@@ -82,7 +82,7 @@ class MyAppState extends State<MyApp> {
                   bottom: 0,
                   child: SfDateRangePicker(
                     onSelectionChanged: _onSelectionChanged,
-                    selectionMode: DateRangePickerSelectionMode.range,
+                    selectionMode: DateRangePickerSelectionMode.multiRange,
                     initialSelectedRange: PickerDateRange(
                       DateTime.now().subtract(const Duration(days: 4)),
                       DateTime.now().add(const Duration(days: 3)),
